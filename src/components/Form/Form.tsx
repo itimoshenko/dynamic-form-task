@@ -10,6 +10,7 @@ import {
   SchemaFieldToComponentMapping,
   SchemaObjectPropertyToComponentMapping,
   SchemaOptions,
+  UiOptions,
 } from "./types";
 import { defaultSchemaFieldToComponentMapping } from "./defaultSchemaFieldToComponentMapping";
 import { defaultSchemaObjectPropertyToComponentMapping } from "./defaultSchemaObjectPropertyToComponentMapping";
@@ -18,17 +19,21 @@ type FormProps = {
   data: object;
   schema: JsonSchemaObject;
   schemaOptions?: SchemaOptions;
+  uiOptions?: UiOptions;
   onSubmit?: (data: any) => void;
 };
 
+// NOTE 22: Компонент основной формы
 const Form: React.FC<FormProps> = memo(function Form({
   data,
   schema,
   schemaOptions,
+  uiOptions,
   onSubmit,
 }) {
   const [formData, setFormData] = useState(data);
 
+  // NOTE 23: Мержим дефолтные настройки и те что нам передали из пропсов
   const _schemaObjectPropertyToComponentMapping: SchemaObjectPropertyToComponentMapping =
     useMemo(() => {
       return {
@@ -37,6 +42,7 @@ const Form: React.FC<FormProps> = memo(function Form({
       };
     }, [schemaOptions?.schemaObjectPropertyToComponentMapping]);
 
+  // NOTE 24: Аналогично мержим дефолтные настройки и те что нам передали из пропсов
   const _schemaFieldToComponentMapping: SchemaFieldToComponentMapping =
     useMemo(() => {
       return {
@@ -45,17 +51,18 @@ const Form: React.FC<FormProps> = memo(function Form({
       };
     }, [schemaOptions?.schemaFieldToComponentMapping]);
 
+  // NOTE 25: Обработчик события подтверждения формы
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
     (event) => {
+      // NOTE 26: Отменяет поведение формы по умолчанию, чтобы форма никуда не редиректила
       event.preventDefault();
-
-      console.log("handleSubmit");
 
       onSubmit?.(formData);
     },
-    [onSubmit, formData]
+    [onSubmit, formData],
   );
 
+  // NOTE 27: Обработчик изменения данных в различных контролах
   const handleChange = useCallback((value: unknown, propertyPath: string[]) => {
     setFormData((prevData) => {
       const clonePrevData = _.cloneDeep(prevData);
@@ -66,6 +73,7 @@ const Form: React.FC<FormProps> = memo(function Form({
     });
   }, []);
 
+  // NOTE 28: Используем контекст чтобы избезать props drilling
   const contextValue: FormContextProps = useMemo(() => {
     return {
       data: formData,
@@ -78,8 +86,6 @@ const Form: React.FC<FormProps> = memo(function Form({
         schemaFieldToComponentMapping: _schemaFieldToComponentMapping,
       },
       onChange: handleChange,
-      Form: () => Form,
-      FormRenderer: FormRenderer,
     };
   }, [
     formData,
@@ -91,14 +97,16 @@ const Form: React.FC<FormProps> = memo(function Form({
   ]);
 
   return (
+    // NOTE 29: Обработчик подтверждения формы висит на форме
+    // что позволяет также сабмитить форму нажатием на клавишу "enter"
     <form onSubmit={handleSubmit}>
       <FormContext.Provider value={contextValue}>
         <FormRenderer />
       </FormContext.Provider>
-      <button type="submit">Сохранить</button>
+      {uiOptions?.submitButton || <button type="submit">Сохранить</button>}
     </form>
   );
 });
 
 export { Form };
-export type { SchemaOptions, FormProps };
+export type { FormProps };

@@ -2,7 +2,6 @@ import { createContext } from "react";
 
 import { JsonSchemaObject } from "../../types";
 import { SchemaOptions } from "./types";
-import type { FormProps } from "./Form";
 
 type FormContextProps = {
   data: object;

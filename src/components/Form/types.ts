@@ -34,8 +34,14 @@ type SchemaOptions = {
   schemaObjectPropertyNameToComponentMapping?: SchemaObjectPropertyNameToComponentMapping;
 };
 
+type UiOptions = {
+  submitButton?: React.ReactNode;
+  addFieldButton?: React.ReactNode;
+};
+
 export type {
   SchemaOptions,
+  UiOptions,
   SchemaFieldComponentProps,
   SchemaObjectPropertyComponentProps,
   SchemaFieldToComponentMapping,

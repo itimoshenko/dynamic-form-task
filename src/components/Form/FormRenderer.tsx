@@ -13,14 +13,15 @@ const FormRenderer: React.FC<FormRendererProps> = memo(function FormRenderer() {
 
   return (
     <>
-      {Object.entries(context?.schema).map(
+      {Object.entries(context?.schema || {}).map(
         ([jsonSchemeFieldName, jsonSchemeFieldValue]: [
-          keyof JsonSchemaObject,
-          JsonSchemaObject[keyof JsonSchemaObject]
+          string,
+          JsonSchemaObject[keyof JsonSchemaObject],
         ]) => {
           const Component =
-            schemaFieldToComponentMapping?.[jsonSchemeFieldName] ||
-            EmptyRenderer;
+            schemaFieldToComponentMapping?.[
+              jsonSchemeFieldName as keyof JsonSchemaObject
+            ] || EmptyRenderer;
 
           if (!context?.schema) {
             return null;
@@ -33,7 +34,7 @@ const FormRenderer: React.FC<FormRendererProps> = memo(function FormRenderer() {
               schemaObject={context?.schema}
             />
           );
-        }
+        },
       )}
     </>
   );
