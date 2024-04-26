@@ -117,7 +117,7 @@ const antSchemaOptions: SchemaOptions = {
         <Flex gap="small" align="center">
           <Tooltip title={schemaObjectProperty.description}>
             <label htmlFor={schemaObjectPropertyName}>
-              <Typography.Text style={{ display: "block", width: 75 }}>
+              <Typography.Text style={{ display: "block", width: 150 }}>
                 {`${schemaObjectProperty.title} ${
                   schemaObject.required?.includes(schemaObjectPropertyName)
                     ? "*"
@@ -161,7 +161,7 @@ const antSchemaOptions: SchemaOptions = {
         <Flex gap="small" align="center">
           <Tooltip title={schemaObjectProperty.description}>
             <label htmlFor={schemaObjectPropertyName}>
-              <Typography.Text style={{ display: "block", width: 75 }}>
+              <Typography.Text style={{ display: "block", width: 150 }}>
                 {`${schemaObjectProperty.title} ${
                   schemaObject.required?.includes(schemaObjectPropertyName)
                     ? "*"
@@ -203,7 +203,7 @@ const antSchemaOptions: SchemaOptions = {
         <Flex gap="small" align="center">
           <Tooltip title={schemaObjectProperty.description}>
             <label htmlFor={schemaObjectPropertyName}>
-              <Typography.Text style={{ display: "block", width: 75 }}>
+              <Typography.Text style={{ display: "block", width: 150 }}>
                 {`${schemaObjectProperty.title} ${
                   schemaObject.required?.includes(schemaObjectPropertyName)
                     ? "*"
@@ -248,7 +248,7 @@ const antSchemaOptions: SchemaOptions = {
         <Flex gap="small" align="center">
           <Tooltip title={schemaObjectProperty.description}>
             <label htmlFor={schemaObjectPropertyName}>
-              <Typography.Text style={{ display: "block", width: 75 }}>
+              <Typography.Text style={{ display: "block", width: 150 }}>
                 {`${schemaObjectProperty.title} ${
                   schemaObject.required?.includes(schemaObjectPropertyName)
                     ? "*"
@@ -329,5 +329,10 @@ const App: React.FC = memo(function App() {
     </>
   );
 });
+
+// NOTE 37: Итог: Осталось очень много нюансов для того чтобы этот код стал "продакшн кодом",
+// таких как валидации, логирование, UI/UX, оптимизации,
+// но текущей реализации должно быть достаточно для того чтобы оценить инженерное мышление и опыт работы с реактом,
+// поэтому на текущем этапе решил закончить реализацию, чтобы не затягивать со сроком
 
 export default App;

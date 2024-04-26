@@ -4,6 +4,7 @@ import { SchemaFieldComponentProps } from "./types";
 import { FormContext } from "./FormContext";
 import { EmptyRenderer } from "./EmptyRenderer";
 
+// NOTE 37: Компонент для рендеринга поля "properties" из JSONSchema
 const FormObjectPropertiesRenderer: React.FC<
   SchemaFieldComponentProps<JsonSchemaObjectProperties>
 > = memo(function FormObjectPropertiesRenderer({ value, schemaObject }) {
@@ -25,7 +26,7 @@ const FormObjectPropertiesRenderer: React.FC<
       {Object.entries(value).map(
         ([jsonSchemaObjectPropertyName, jsonSchemaObjectProperty]: [
           string,
-          JsonSchemaObjectProperties[keyof JsonSchemaObjectProperties]
+          JsonSchemaObjectProperties[keyof JsonSchemaObjectProperties],
         ]) => {
           const Component =
             schemaObjectPropertyNameToComponentMapping?.[
@@ -46,7 +47,7 @@ const FormObjectPropertiesRenderer: React.FC<
               schemaObjectProperty={jsonSchemaObjectProperty}
             />
           );
-        }
+        },
       )}
     </>
   );

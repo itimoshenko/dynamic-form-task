@@ -13,6 +13,7 @@ const FormRenderer: React.FC<FormRendererProps> = memo(function FormRenderer() {
 
   return (
     <>
+      {/* NOTE 30: Рендерим поля схемы */}
       {Object.entries(context?.schema || {}).map(
         ([jsonSchemeFieldName, jsonSchemeFieldValue]: [
           string,

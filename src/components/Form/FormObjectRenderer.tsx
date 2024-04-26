@@ -5,6 +5,7 @@ import { JsonSchemaObject } from "../../types";
 import { FormContext, FormContextProps } from "./FormContext";
 import { FormRenderer } from "./FormRenderer";
 
+// NOTE 33: Компонент который рендерит поле с типом "object"
 const FormObjectRenderer: React.FC<SchemaObjectPropertyComponentProps<object>> =
   memo(function FormObjectRenderer({
     value,
@@ -13,11 +14,13 @@ const FormObjectRenderer: React.FC<SchemaObjectPropertyComponentProps<object>> =
   }) {
     const context = useContext(FormContext);
 
+    // NOTE 34: Создаем новый контекст для вложенного объекта
     const newContextValue: FormContextProps | null = useMemo(() => {
       return context
         ? {
             ...context,
             data: value,
+            // NOTE 35: Склеиваем путь до поля
             dataPath: [...context.dataPath, schemaObjectPropertyName],
             schema: schemaObjectProperty as JsonSchemaObject,
           }
