@@ -269,6 +269,53 @@ const antSchemaOptions: SchemaOptions = {
         </Flex>
       );
     }),
+    type: memo(function AntSelectIntegration({
+      value,
+      onChange,
+      schemaObject,
+      schemaObjectPropertyName,
+      schemaObjectProperty,
+    }) {
+      const context = useContext(FormContext);
+
+      const handleChange: React.ChangeEventHandler<HTMLInputElement> =
+        useCallback(
+          (value) => {
+            onChange(value, [
+              ...(context?.dataPath || []),
+              schemaObjectPropertyName,
+            ]);
+          },
+          [onChange],
+        );
+
+      return (
+        <Flex gap="small" align="center">
+          <Tooltip title={schemaObjectProperty.description}>
+            <label htmlFor={schemaObjectPropertyName}>
+              <Typography.Text style={{ display: "block", width: 150 }}>
+                {`${schemaObjectProperty.title} ${
+                  schemaObject.required?.includes(schemaObjectPropertyName)
+                    ? "*"
+                    : ""
+                }`}
+              </Typography.Text>
+            </label>
+          </Tooltip>
+          <Select
+            id={schemaObjectPropertyName}
+            value={value}
+            onChange={handleChange}
+            style={{ width: "100%" }}
+          >
+            <Select.Option value="object">object</Select.Option>
+            <Select.Option value="string">string</Select.Option>
+            <Select.Option value="boolean">boolean</Select.Option>
+            <Select.Option value="number">number</Select.Option>
+          </Select>
+        </Flex>
+      );
+    }),
   },
 };
 
